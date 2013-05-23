@@ -49,12 +49,12 @@
    */
   function _enable() {
     var self = this;
-    //select all textareas in the target element
+   
     var textAreaList = this._targetElement.querySelectorAll('textarea[' + this._options.wideAreaAttr + '=\'enable\']');
-    //then, change all textareas to widearea
+    
     for (var i = textAreaList.length - 1; i >= 0; i--) {
       var currentTextArea = textAreaList[i];
-      //create widearea wrapper element
+
       var wideAreaWrapper  = document.createElement('div'),
           wideAreaIcons    = document.createElement('div')
           fullscreenIcon   = document.createElement('a');
@@ -63,18 +63,17 @@
       wideAreaIcons.className   = 'widearea-icons';
       fullscreenIcon.className  = 'widearea-icon fullscreen';
       fullscreenIcon.title = this._options.fullScreenIconLabel;
-      //hack!
+
       fullscreenIcon.href = 'javascript:void(0);';
 
-      //bind to click event
       fullscreenIcon.onclick = function() {
         _enableFullScreen.call(self, this);
       };
-      //clone current textarea
+      
       wideAreaWrapper.appendChild(currentTextArea.cloneNode());
       wideAreaIcons.appendChild(fullscreenIcon);
       wideAreaWrapper.appendChild(wideAreaIcons);
-      //add the wrapper to element
+      
       currentTextArea.parentNode.replaceChild(wideAreaWrapper, currentTextArea);
     };
   }
@@ -182,11 +181,9 @@
 
     //change the focus
     smallTextArea.focus();
-
-    //set fullscreen textarea to small one
     smallTextArea.value = fullscreenTextArea.value;
+    smallTextArea.className = smallTextArea.className.replace('widearea-fullscreened ', '');
 
-    //and then remove the overlay layer
     overlayLayer.parentNode.removeChild(overlayLayer);
 
     //clean listeners
@@ -213,7 +210,7 @@
 
   var wideArea = function (selector) {
     if (typeof (selector) === 'string') {
-      //select the target element with query selector
+      
       var targetElement = document.querySelector(selector);
 
       if (targetElement) {
@@ -226,12 +223,6 @@
     }
   };
 
-  /**
-   * Current WideArea version
-   *
-   * @property version
-   * @type String
-   */
   wideArea.version = VERSION;
 
   //Prototype
